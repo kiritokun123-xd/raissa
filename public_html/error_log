@@ -1,0 +1,126 @@
+[10-Jun-2022 18:10:36 UTC] PHP Warning:  Undefined array key "id" in /home/raissamo/controllers/LogisticaController.php on line 885
+[10-Jun-2022 18:10:36 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/raissamo/models/ActiveRecord.php:301
+Stack trace:
+#0 /home/raissamo/models/ActiveRecord.php(301): mysqli->query()
+#1 /home/raissamo/models/UsuarioPermiso.php(22): Model\ActiveRecord::constularSQL()
+#2 /home/raissamo/controllers/LogisticaController.php(886): Model\UsuarioPermiso::mostrarPermisos()
+#3 [internal function]: Controllers\LogisticaController::newmotor()
+#4 /home/raissamo/Router.php(76): call_user_func()
+#5 /home/raissamo/public_html/index.php(207): MVC\Router->comprobarRutas()
+#6 {main}
+  thrown in /home/raissamo/models/ActiveRecord.php on line 301
+[10-Jun-2022 18:10:37 UTC] PHP Warning:  Undefined array key "id" in /home/raissamo/controllers/LogisticaController.php on line 885
+[10-Jun-2022 18:10:37 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/raissamo/models/ActiveRecord.php:301
+Stack trace:
+#0 /home/raissamo/models/ActiveRecord.php(301): mysqli->query()
+#1 /home/raissamo/models/UsuarioPermiso.php(22): Model\ActiveRecord::constularSQL()
+#2 /home/raissamo/controllers/LogisticaController.php(886): Model\UsuarioPermiso::mostrarPermisos()
+#3 [internal function]: Controllers\LogisticaController::newmotor()
+#4 /home/raissamo/Router.php(76): call_user_func()
+#5 /home/raissamo/public_html/index.php(207): MVC\Router->comprobarRutas()
+#6 {main}
+  thrown in /home/raissamo/models/ActiveRecord.php on line 301
+[10-Jun-2022 18:10:46 UTC] PHP Warning:  Undefined array key "id" in /home/raissamo/controllers/LogisticaController.php on line 885
+[10-Jun-2022 18:10:46 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/raissamo/models/ActiveRecord.php:301
+Stack trace:
+#0 /home/raissamo/models/ActiveRecord.php(301): mysqli->query()
+#1 /home/raissamo/models/UsuarioPermiso.php(22): Model\ActiveRecord::constularSQL()
+#2 /home/raissamo/controllers/LogisticaController.php(886): Model\UsuarioPermiso::mostrarPermisos()
+#3 [internal function]: Controllers\LogisticaController::newmotor()
+#4 /home/raissamo/Router.php(76): call_user_func()
+#5 /home/raissamo/public_html/index.php(207): MVC\Router->comprobarRutas()
+#6 {main}
+  thrown in /home/raissamo/models/ActiveRecord.php on line 301
+[10-Jun-2022 18:10:47 UTC] PHP Warning:  Undefined array key "id" in /home/raissamo/controllers/LogisticaController.php on line 852
+[10-Jun-2022 18:10:47 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/raissamo/models/ActiveRecord.php:301
+Stack trace:
+#0 /home/raissamo/models/ActiveRecord.php(301): mysqli->query()
+#1 /home/raissamo/models/UsuarioPermiso.php(22): Model\ActiveRecord::constularSQL()
+#2 /home/raissamo/controllers/LogisticaController.php(853): Model\UsuarioPermiso::mostrarPermisos()
+#3 [internal function]: Controllers\LogisticaController::invmotor()
+#4 /home/raissamo/Router.php(76): call_user_func()
+#5 /home/raissamo/public_html/index.php(207): MVC\Router->comprobarRutas()
+#6 {main}
+  thrown in /home/raissamo/models/ActiveRecord.php on line 301
+[10-Jun-2022 18:11:01 UTC] PHP Warning:  Undefined array key "id" in /home/raissamo/controllers/DashboardController.php on line 12
+[10-Jun-2022 18:11:01 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/raissamo/models/ActiveRecord.php:301
+Stack trace:
+#0 /home/raissamo/models/ActiveRecord.php(301): mysqli->query()
+#1 /home/raissamo/models/UsuarioPermiso.php(22): Model\ActiveRecord::constularSQL()
+#2 /home/raissamo/controllers/DashboardController.php(13): Model\UsuarioPermiso::mostrarPermisos()
+#3 [internal function]: Controllers\DashboardController::inicio()
+#4 /home/raissamo/Router.php(76): call_user_func()
+#5 /home/raissamo/public_html/index.php(207): MVC\Router->comprobarRutas()
+#6 {main}
+  thrown in /home/raissamo/models/ActiveRecord.php on line 301
+[10-Jun-2022 18:11:02 UTC] PHP Notice:  session_start(): Ignoring session_start() because a session is already active in /home/raissamo/models/Admin.php on line 99
+[10-Jun-2022 11:11:12 America/Phoenix] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry ' 162FMJ21060574' for key 'nummotor' in /home/raissamo/models/ActiveRecord.php:105
+Stack trace:
+#0 /home/raissamo/models/ActiveRecord.php(105): mysqli->query()
+#1 /home/raissamo/models/ActiveRecord.php(32): Model\ActiveRecord->crear()
+#2 /home/raissamo/controllers/LogisticaController.php(906): Model\ActiveRecord->guardar()
+#3 [internal function]: Controllers\LogisticaController::newmotor()
+#4 /home/raissamo/Router.php(76): call_user_func()
+#5 /home/raissamo/public_html/index.php(207): MVC\Router->comprobarRutas()
+#6 {main}
+  thrown in /home/raissamo/models/ActiveRecord.php on line 105
+[10-Jun-2022 11:11:46 America/Phoenix] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry ' 162FMJ21060574' for key 'nummotor' in /home/raissamo/models/ActiveRecord.php:105
+Stack trace:
+#0 /home/raissamo/models/ActiveRecord.php(105): mysqli->query()
+#1 /home/raissamo/models/ActiveRecord.php(32): Model\ActiveRecord->crear()
+#2 /home/raissamo/controllers/LogisticaController.php(906): Model\ActiveRecord->guardar()
+#3 [internal function]: Controllers\LogisticaController::newmotor()
+#4 /home/raissamo/Router.php(76): call_user_func()
+#5 /home/raissamo/public_html/index.php(207): MVC\Router->comprobarRutas()
+#6 {main}
+  thrown in /home/raissamo/models/ActiveRecord.php on line 105
+[10-Jun-2022 11:12:13 America/Phoenix] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry ' 162FMJ21060574' for key 'nummotor' in /home/raissamo/models/ActiveRecord.php:105
+Stack trace:
+#0 /home/raissamo/models/ActiveRecord.php(105): mysqli->query()
+#1 /home/raissamo/models/ActiveRecord.php(32): Model\ActiveRecord->crear()
+#2 /home/raissamo/controllers/LogisticaController.php(906): Model\ActiveRecord->guardar()
+#3 [internal function]: Controllers\LogisticaController::newmotor()
+#4 /home/raissamo/Router.php(76): call_user_func()
+#5 /home/raissamo/public_html/index.php(207): MVC\Router->comprobarRutas()
+#6 {main}
+  thrown in /home/raissamo/models/ActiveRecord.php on line 105
+[10-Jun-2022 11:18:13 America/Phoenix] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry ' 162FMJ21060574' for key 'nummotor' in /home/raissamo/models/ActiveRecord.php:105
+Stack trace:
+#0 /home/raissamo/models/ActiveRecord.php(105): mysqli->query()
+#1 /home/raissamo/models/ActiveRecord.php(32): Model\ActiveRecord->crear()
+#2 /home/raissamo/controllers/LogisticaController.php(906): Model\ActiveRecord->guardar()
+#3 [internal function]: Controllers\LogisticaController::newmotor()
+#4 /home/raissamo/Router.php(76): call_user_func()
+#5 /home/raissamo/public_html/index.php(207): MVC\Router->comprobarRutas()
+#6 {main}
+  thrown in /home/raissamo/models/ActiveRecord.php on line 105
+[10-Jun-2022 11:19:23 America/Phoenix] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry ' 162FMJ21060574' for key 'nummotor' in /home/raissamo/models/ActiveRecord.php:105
+Stack trace:
+#0 /home/raissamo/models/ActiveRecord.php(105): mysqli->query()
+#1 /home/raissamo/models/ActiveRecord.php(32): Model\ActiveRecord->crear()
+#2 /home/raissamo/controllers/LogisticaController.php(906): Model\ActiveRecord->guardar()
+#3 [internal function]: Controllers\LogisticaController::newmotor()
+#4 /home/raissamo/Router.php(76): call_user_func()
+#5 /home/raissamo/public_html/index.php(207): MVC\Router->comprobarRutas()
+#6 {main}
+  thrown in /home/raissamo/models/ActiveRecord.php on line 105
+[10-Jun-2022 11:19:46 America/Phoenix] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry ' 162FMJ21060574' for key 'nummotor' in /home/raissamo/models/ActiveRecord.php:105
+Stack trace:
+#0 /home/raissamo/models/ActiveRecord.php(105): mysqli->query()
+#1 /home/raissamo/models/ActiveRecord.php(32): Model\ActiveRecord->crear()
+#2 /home/raissamo/controllers/LogisticaController.php(906): Model\ActiveRecord->guardar()
+#3 [internal function]: Controllers\LogisticaController::newmotor()
+#4 /home/raissamo/Router.php(76): call_user_func()
+#5 /home/raissamo/public_html/index.php(207): MVC\Router->comprobarRutas()
+#6 {main}
+  thrown in /home/raissamo/models/ActiveRecord.php on line 105
+[10-Jun-2022 11:20:02 America/Phoenix] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry ' 162FMJ21060574' for key 'nummotor' in /home/raissamo/models/ActiveRecord.php:105
+Stack trace:
+#0 /home/raissamo/models/ActiveRecord.php(105): mysqli->query()
+#1 /home/raissamo/models/ActiveRecord.php(32): Model\ActiveRecord->crear()
+#2 /home/raissamo/controllers/LogisticaController.php(906): Model\ActiveRecord->guardar()
+#3 [internal function]: Controllers\LogisticaController::newmotor()
+#4 /home/raissamo/Router.php(76): call_user_func()
+#5 /home/raissamo/public_html/index.php(207): MVC\Router->comprobarRutas()
+#6 {main}
+  thrown in /home/raissamo/models/ActiveRecord.php on line 105

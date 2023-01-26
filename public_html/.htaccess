@@ -1,0 +1,7 @@
+php_value session.gc_maxlifetime 7200
+php_value session.cookie_lifetime 7200
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php/$1 [L]
