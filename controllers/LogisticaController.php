@@ -1,22 +1,25 @@
 <?php 
 namespace Controllers;
 
-use MVC\Router;
-use Model\Articulo;
 use Model\Moto;
-use Model\ArticuloAlmacen;
-use Model\UsuarioPermiso;
+use MVC\Router;
 use Model\Admin;
+use Model\Motor;
+use Model\Placa;
+use Model\Serie;
+use Model\Venta;
 use Model\Pedido;
 use Model\Pedidoe;
 use Model\Pedidot;
-use Model\Pedidots;
+use Model\Articulo;
 use Model\Contrato;
-use Model\Serie;
-use Model\Motor;
+use Model\Pedidots;
 
+use Model\ArticuloN;
+use Model\Aprobacion;
+use Model\UsuarioPermiso;
+use Model\ArticuloAlmacen;
 use Intervention\Image\ImageManagerStatic as Image;
-use Model\Placa;
 
 class LogisticaController{
 
@@ -188,7 +191,159 @@ class LogisticaController{
             'nick' => $nick
         ]);
     }
+    //=====ARTICULON======//
 
+    public static function invarticulon(Router $router){
+        $auth = $_SESSION['id'];
+        $arrayPermisos = UsuarioPermiso::mostrarPermisos($auth);
+        $nick = Admin::mostrarNombre($auth);
+
+        $resultado = $_GET['resultado'] ?? null;
+        $cantidadModificada = $_GET['cantidadModificada'] ?? null;
+
+        $limite = 100;
+        
+        $pag = $_GET['pag'] ?? null;
+
+        $offset = 0;
+
+        $totalPagina = ArticuloN::totalPagina();
+
+        $totalLink = ceil($totalPagina/ $limite);
+        
+        if(isset($pag)){
+            if($pag < 1){
+                $pag = 1;
+            }
+            $offset = ($pag - 1) * $limite;    
+        }
+        
+        $articulos = ArticuloN::allarticulo($offset, $limite);
+        
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            $updateCantidad = new ArticuloN();
+            if(floatval($_POST["cantidad"] >= 0)){
+                
+                if($_POST["boton"] === 'Agregar'){
+                    $nuevaCantidad = floatval($_POST["cantidadActual"])  + floatval($_POST["cantidad"]);
+                    $updateCantidad -> actualizarCantidad($nuevaCantidad,$_POST["id"]);
+                    header('Location: /logistica/inventario-articulos?pag='.$pag.'&resultado=1&cantidadModificada='.floatval($_POST["cantidad"]));
+                }else{
+                    if(floatval($_POST["cantidadActual"]) >= floatval($_POST["cantidad"])){
+                        $nuevaCantidad = floatval($_POST["cantidadActual"])  - floatval($_POST["cantidad"]);
+                        $updateCantidad -> actualizarCantidad($nuevaCantidad,$_POST["id"]);
+                    header('Location: /logistica/inventario-articulos?pag='.$pag.'&resultado=3&cantidadModificada='.floatval($_POST["cantidad"]));
+                    }
+                }                     
+            }      
+        }
+
+        $router->render('logistica/invarticulon',[
+            'cantidadModificada' => $cantidadModificada,
+            'articulos' => $articulos,
+            'resultado' => $resultado,
+            'totalLink' => $totalLink,
+            'arrayPermisos' => $arrayPermisos,
+            'nick' => $nick
+        ]);
+    }
+    public static function invarticulonajaxid(Router $router){
+        $filtro = $_POST['filtro'];
+
+        $articulos = ArticuloN::filtrarAjax('codigo',$filtro);
+
+        $router->renderAjax('invarticulonajax',[
+            'articulos' => $articulos
+        ]);
+    }
+    public static function stockarticulonajax(Router $router){
+        $id = $_POST['id'];
+        $articulo = Articulo::find($id);
+        //debuguear($articulo);
+        $articuloalmacen = ArticuloAlmacen::someAjax($id);
+        //debuguear($articuloalmacen);
+
+        $router->renderAjax('stockarticuloajax',[
+            'articulo' => $articulo,
+            'articuloalmacen' => $articuloalmacen
+        ]);
+    }
+    public static function invarticulonajax(Router $router){
+        $filtro = $_POST['filtro'];
+
+        $articulos = ArticuloN::filtrarAjax('descripcion',$filtro);
+
+        $router->renderAjax('invarticulonajax',[
+            'articulos' => $articulos
+        ]);
+    }
+    public static function newarticulon(Router $router){
+        $auth = $_SESSION['id'];
+        $arrayPermisos = UsuarioPermiso::mostrarPermisos($auth);
+        $nick = Admin::mostrarNombre($auth);
+
+        $articulo = new ArticuloN();
+
+        $errores = ArticuloN::getErrores();
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            /*CREA UNA NUEVA INSTANCIA*/
+            $articulo = new ArticuloN($_POST['articulo']);
+            
+            /*VALIDAR*/
+            $errores = $articulo->validar();
+
+            //REVISAR QUE EL ARREGLO DE ERRORES ESTE VACIO
+            if(empty($errores)){
+                //crear la carpeta imagenes
+                //SUBE A LA BD
+                $articulo->guardar('/logistica/inventario-articulos');
+
+            }
+        }
+
+        $router->render('logistica/newarticulon',[
+            'articulo' => $articulo,
+            'errores' => $errores,
+            'arrayPermisos' => $arrayPermisos,
+            'nick' => $nick
+        ]);
+    }
+    public static function updarticulon(Router $router){
+        $auth = $_SESSION['id'];
+        $arrayPermisos = UsuarioPermiso::mostrarPermisos($auth);
+        $nick = Admin::mostrarNombre($auth);
+
+        $id = validarORedireccionar('/logistica/inventario-articulos');
+
+        $articulo = ArticuloN::find($id);
+
+        $errores = ArticuloN::getErrores();
+
+        //EJECUTAR EL CODIGO DESPUES DE QuE EL USUARIO ENVIA EL FORMULARIO
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            //Asignar los atributos
+            $args = $_POST['articulo'];
+            
+            $articulo->sincronizar($args);
+            
+            $errores = $articulo->validar();
+
+            //REVISAR QUE EL AAREGLO DE ERRORES ESTE VACIO
+            if(empty($errores)){        
+                $articulo->guardar('/logistica/inventario-articulos');
+            }
+
+        }
+
+        $router->render('logistica/updarticulon',[
+            'articulo' => $articulo,
+            'errores' => $errores,
+            'arrayPermisos' => $arrayPermisos,
+            'nick' => $nick
+        ]);
+    }
+    
     //=====MOTO======//
 
     public static function invmoto(Router $router){
@@ -451,7 +606,7 @@ class LogisticaController{
         $arrayPermisos = UsuarioPermiso::mostrarPermisos($auth);
         $nick = Admin::mostrarNombre($auth);
 
-        $id = validarORedireccionar('/logistica/pedido');
+        $id = validarORedireccionar('/logistica/con-aprobacion');
 
         $pedido = Pedido::find($id);
         
@@ -476,7 +631,7 @@ class LogisticaController{
             $serie = new Serie();
             $motor = new Motor();
             
-            //debuguear($oldserie);
+            
             //REVISAR QUE EL AAREGLO DE ERRORES ESTE VACIO
             if(empty($errores)){
                 if(empty($oldserie)){
@@ -492,7 +647,7 @@ class LogisticaController{
                     $motor->actualizarMotor("asignado",$pedido->nummotor);
                 }
                 
-                $pedido->guardar('/logistica/pedido');
+                $pedido->guardar('/logistica/con-aprobacion');
 
             }
 
@@ -507,7 +662,160 @@ class LogisticaController{
             'nick' => $nick
         ]);
     }
+    //=====APROBACION TRIMOTO======//
+    public static function invsaprobacion(Router $router){
+        $auth = $_SESSION['id'];
+        $arrayPermisos = UsuarioPermiso::mostrarPermisos($auth);
+        $nick = Admin::mostrarNombre($auth);
 
+        $resultado = $_GET['resultado'] ?? null;
+
+        $limite = 50;
+        
+        $pag = $_GET['pag'] ?? null;
+
+        $offset = 0;
+
+        $totalPagina = Venta::totalPaginaVentas();
+        
+        $totalLink = ceil($totalPagina/ $limite);
+        
+        if(isset($pag)){
+            if($pag < 1){
+                $pag = 1;
+            }
+            $offset = ($pag - 1) * $limite;    
+        }
+        $ventas = Venta::allFechaPedidoVenta($offset, $limite);
+    
+        $router->render('logistica/invaprobacion',[
+            'ventas' => $ventas,
+            'totalPagina' => $totalPagina,
+            'resultado' => $resultado,
+            'totalLink' => $totalLink,
+            'arrayPermisos' => $arrayPermisos,
+            'nick' => $nick
+        ]);
+    }
+    public static function invcaprobacion(Router $router){
+        $auth = $_SESSION['id'];
+        $arrayPermisos = UsuarioPermiso::mostrarPermisos($auth);
+        $nick = Admin::mostrarNombre($auth);
+
+        $resultado = $_GET['resultado'] ?? null;
+
+        $limite = 50;
+        
+        $pag = $_GET['pag'] ?? null;
+
+        $offset = 0;
+
+        $totalPagina = Pedido::totalPagina();
+        
+        $totalLink = ceil($totalPagina/ $limite);
+        
+        if(isset($pag)){
+            if($pag < 1){
+                $pag = 1;
+            }
+            $offset = ($pag - 1) * $limite;    
+        }
+        $pedidos = Pedido::allFechaPedido($offset, $limite);
+
+        /*if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            $aprobacion = new Aprobacion();
+            $aprobacion_estado = $_POST["estado"];
+            //debuguear($venta_estado);
+            if($aprobacion_estado != "Enviado"){
+                $aprobacion->actualizarVenta("Enviado",$_POST["id"]);
+                header('Location: /logistica/con-aprobacion?resultado=3');
+            }else if($aprobacion_estado == "Enviado"){
+                header('Location: /logistica/con-aprobacion?resultado=4');
+            }
+        }*/
+    
+        $router->render('logistica/invconaprobacion2',[
+            'pedidos' => $pedidos,
+            'totalPagina' => $totalPagina,
+            'resultado' => $resultado,
+            'totalLink' => $totalLink,
+            'arrayPermisos' => $arrayPermisos,
+            'nick' => $nick
+        ]);
+    }
+    public static function newaprobacion(Router $router){
+        
+        $auth = $_SESSION['id'];
+        $arrayPermisos = UsuarioPermiso::mostrarPermisos($auth);
+        $nick = Admin::mostrarNombre($auth);
+
+        $pedido = new Pedido();
+        $id = validarORedireccionar('/logistica/sin-aprobacion');
+        $ventaold = Venta::find($id);
+
+        $errores = Pedido::getErrores();
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            /*CREA UNA NUEVA INSTANCIA*/
+            $pedido = new Pedido($_POST['pedido']);
+            $ventaold->actualizarVenta("Aprobado",$ventaold->id);
+
+            /*VALIDAR*/
+            $errores = $pedido->validar();
+
+            //REVISAR QUE EL ARREGLO DE ERRORES ESTE VACIO
+            if(empty($errores)){
+
+                //SUBE A LA BD
+                $pedido->guardar('/logistica/con-aprobacion');
+                
+            }
+        }
+        $router->render('logistica/newaprobacion',[
+            'pedido' => $pedido,
+            'ventaold' => $ventaold,
+            'errores' => $errores,
+            'arrayPermisos' => $arrayPermisos,
+            'nick' => $nick
+        ]);
+
+        /*$auth = $_SESSION['id'];
+        $arrayPermisos = UsuarioPermiso::mostrarPermisos($auth);
+        $nick = Admin::mostrarNombre($auth);
+
+        $aprobacion = new Aprobacion();
+
+        $id = validarORedireccionar('/venta');
+
+        $ventaold = Venta::find($id);
+
+        $errores = Aprobacion::getErrores();
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            //CREA UNA NUEVA INSTANCIA
+            $aprobacion = new Aprobacion($_POST['aprobacion']);
+
+            $ventaold->actualizarVenta("Aprobado",$ventaold->id);
+
+            //VALIDAR
+            $errores = $aprobacion->validar();
+
+            //REVISAR QUE EL ARREGLO DE ERRORES ESTE VACIO
+            if(empty($errores)){
+
+                //SUBE A LA BD
+                $aprobacion->guardar('/logistica/con-aprobacion');
+                
+            }
+        }
+        $router->render('logistica/newaprobacion',[
+            'aprobacion' => $aprobacion,
+            'ventaold' => $ventaold,
+            'errores' => $errores,
+            'arrayPermisos' => $arrayPermisos,
+            'nick' => $nick
+        ]);*/
+    }
      //=====PEDIDO ESTRUCUTURA======//
      public static function invpedidoE(Router $router){
         $auth = $_SESSION['id'];
@@ -803,7 +1111,7 @@ class LogisticaController{
                 $image2 = Image::make($_FILES['pedido']['tmp_name']['ima_trimoto'])->fit(600,600);
                 $pedido->setImagenT($nombreImagenT);
             }
-
+            
             /*VALIDAR*/
             $errores = $pedido->validar();
 
@@ -821,9 +1129,21 @@ class LogisticaController{
                 if($image2){
                     $image2->save(CARPETA_IMAGENES . $nombreImagenT);
                 }
-                //SUBE A LA BD
-                $pedido->guardar('/logistica/pedidoTS');
-                
+                //VERIFICAMOS QUE EL ID DEL PEDIDO TRIMOTO EXISTA
+                $pedidocheck = Pedido::find2("pedidos","id",$_POST['pedido']['ord_trimoto']);
+                if(!$pedidocheck){
+                    //debuguear("no existe id de pedido trimoto");
+                    //REDIRECIONAR AL USUARIO
+                    header('Location: /logistica/pedidoTS?resultado=3');
+                }else{
+                    //SUBE A LA BD
+                    $pedido->guardar2('/logistica/pedidoTS');
+                    $nuevoId = PedidoTS::ultimoId();
+                    $pedido->actualizarOT_PT($nuevoId,$_POST['pedido']['ord_trimoto'],'/logistica/pedidoTS');
+                    if($pedido){
+                        header('Location: /logistica/pedidoTS?resultado=1');
+                    }
+                }                              
             }
         }
         $router->render('logistica/newpedidots',[
@@ -860,7 +1180,6 @@ class LogisticaController{
             //SETEAR LA IMAGEN
             //realiza un RESIZE A LA IMAGEN CON INTERVENTION
             if($_FILES['pedido']['tmp_name']['ima_cobertor']){
-                echo "holaaaaaaaaaaa";
                 $image1 = Image::make($_FILES['pedido']['tmp_name']['ima_cobertor'])->fit(600,600);
                 $pedido->setImagenC($nombreImagenC);
             }
@@ -884,7 +1203,20 @@ class LogisticaController{
                     }
                 }
                 
-                $pedido->guardar('/logistica/pedidoTS');
+                $pedido->guardar2('/logistica/pedidoTS');
+                
+                //Verificamos si la orden de trimoto ya tiene pedido tapiz asignado
+                $pedidoCheck = Pedido::find2("pedidos","ped_tapiz",$id);
+                if($pedidoCheck){
+                    //debuguear($pedidoCheck->{"id"});
+                    $pedidoCheck->actualizarOT_PT("''",$pedidoCheck->{"id"});
+                }
+
+                $pedido->actualizarOT_PT($id,$_POST['pedido']['ord_trimoto']);
+                if($pedido){
+                    //REDIRECIONAR AL USUARIO
+                    header('Location: /logistica/pedidoTS?resultado=2');
+                }
             }
 
         }

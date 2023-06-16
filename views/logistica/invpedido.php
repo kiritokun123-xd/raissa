@@ -72,6 +72,7 @@
                         <div class="div-acciones">
                             <a href="/logistica/actualizar-pedido?id=<?php echo $pedido->id; ?>" class="accion-actualizar"><i class='bx bxs-pencil'></i></a>
                             <a class="verpedido" target="_blank" href="/documentos/pdf?id=<?php echo $pedido->id;?>">Ver</a>
+                            <a class="verpedidoambos" target="_blank" href="/documentos/pdfPT_OT?id=<?php echo $pedido->id;?>">Ver Ambos</a>
                         </div>
                     </td>
                     

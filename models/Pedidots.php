@@ -62,6 +62,12 @@ class Pedidots extends ActiveRecord{
         if(!$this->responsable){
             self::$errores[] = "El responsable es obligatorio";
         }
+        if(!$this->ima_cobertor){
+            self::$errores[] = "La imagen pequeña es obligatorio";
+        }
+        if(!$this->ima_trimoto){
+            self::$errores[] = "La imagen grande es obligatorio";
+        }
         $this->oversize(45,$this->ord_trimoto);
         $this->oversize(100,$this->cliente);
         $this->oversize(100,$this->responsable);

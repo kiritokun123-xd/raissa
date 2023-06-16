@@ -11,12 +11,19 @@
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <!-- CSS -->
     <link rel="stylesheet" href="../build/css/app6.css">
+    <link rel="stylesheet" type="text/css" href="../build/css/jquery-ui.css">
     <!--==SWEET ALERT-->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- <script src="sweetalert2.all.min.js"></script> -->
 
     <script src="../build/js/bundle3.min.js"></script>
-    <script src="../build/js/jquery-3.6.0.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+    <!--<script type="text/javascript" src="../build/js/jquery-1.12.1.min.js"></script>
+	<script type="text/javascript" src="../build/js/jquery-ui.js"></script>-->
+    <!-- <script src="../build/js/jquery-3.6.0.min.js"></script>-->
     <!--====CHARTJS===-->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
@@ -95,13 +102,12 @@
                     <i class='bx bxs-right-arrow bx-arrow'></i>
                 </a>
 
-                <div class="nav-caja t-4 caja-query" >
+                <div class="nav-caja t-3 caja-query" >
                     <div class="nav-caja-items">
                         <h6>Gestionar:</h6>
-                        <a href="/logistica/pedido">Trimotos</a>
+                        <a href="/logistica/sin-aprobacion">Trimotos</a>
                         <a href="/logistica/pedidoE">Estructuras</a>
                         <a href="/logistica/pedidoTS">Tapiz Simple</a>
-                        <a href="/logistica/pedidoT">Tapiz Hard</a>
                     </div>
                 </div>
             </li>
@@ -130,38 +136,61 @@
             <hr class="siderbar-divider">
             
 
-            <div class="sidebar-heading" <?php echo (noTienePermiso(3,$arrayPermisos))? 'style="display: none"': ''; ?>>Almacén Tienda</div>
+            <div class="sidebar-heading" <?php echo (noTienePermiso(3,$arrayPermisos))? 'style="display: none"': ''; ?>>Área de Ventas</div>
 
             <li class="nav-item" <?php echo (noTienePermiso(3,$arrayPermisos))? 'style="display: none"': ''; ?>>
+                <a href="/venta" class="nav-link">
+                    <i class='bx bx-cart bx-icon'></i>
+                    <span class="span">Ventas</span>
+                </a> 
+            </li>
+
+            <hr class="siderbar-divider">
+            
+
+            <div class="sidebar-heading" <?php echo (noTienePermiso(3,$arrayPermisos))? 'style="display: none"': ''; ?>>Área de Compras</div>
+
+            <li class="nav-item" <?php echo (noTienePermiso(3,$arrayPermisos))? 'style="display: none"': ''; ?>>
+                <a href="/compras" class="nav-link">
+                    <i class='bx bxs-factory bx-icon'></i>
+                    <span class="span">Compras</span>
+                </a> 
+            </li>
+            
+            <hr class="siderbar-divider ">
+
+            <div class="sidebar-heading" style="display: none">Almacén Tienda</div>
+
+            <li class="nav-item" style="display: none">
                 <a href="/tienda/inventario" class="nav-link">
                     <i class='bx bxs-store-alt bx-icon'></i>
                     <span class="span">Inventario</span>
                 </a> 
             </li>
             
-            <hr class="siderbar-divider ">
+            <hr class="siderbar-divider "style="display: none">
 
-            <div class="sidebar-heading" <?php echo (noTienePermiso(3,$arrayPermisos))? 'style="display: none"': ''; ?>>Almacén Ensamblaje</div>
+            <div class="sidebar-heading" style="display: none">Almacén Ensamblaje</div>
 
-            <li class="nav-item" <?php echo (noTienePermiso(3,$arrayPermisos))? 'style="display: none"': ''; ?>>
+            <li class="nav-item" style="display: none">
                 <a href="/ensamblaje/inventario" class="nav-link">
                     <i class='bx bxs-store-alt bx-icon'></i>
                     <span class="span">Inventario</span>
                 </a> 
             </li>
 
-            <hr class="siderbar-divider">
+            <hr class="siderbar-divider"style="display: none">
 
-            <div class="sidebar-heading" <?php echo (noTienePermiso(3,$arrayPermisos))? 'style="display: none"': ''; ?>>Almacén Soldadura</div>
+            <div class="sidebar-heading" style="display: none">Almacén Soldadura</div>
 
-            <li class="nav-item" <?php echo (noTienePermiso(3,$arrayPermisos))? 'style="display: none"': ''; ?>>
+            <li class="nav-item" style="display: none">
                 <a href="/soldadura/inventario" class="nav-link">
                     <i class='bx bxs-store-alt bx-icon'></i>
                     <span class="span">Inventario</span>
                 </a> 
             </li>
             
-            <hr class="siderbar-divider">
+            <hr class="siderbar-divider"style="display: none">
 
             <li class="nav-item" <?php echo (noTienePermiso(4,$arrayPermisos))? 'style="display: none"': ''; ?>>
                 <a href="" class="nav-link navlink"  data-paso="3">

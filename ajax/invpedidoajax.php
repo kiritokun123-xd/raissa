@@ -27,7 +27,8 @@
         <div class="div-acciones">
         <a href="/logistica/actualizar-pedido?id=' .$pedido->id .'"  class="accion-actualizar"><i class="bx bxs-pencil"></i></a>
         <a class="verpedido" target="_blank" href="/documentos/pdf?id=' .$pedido->id .'">Ver</a>
-            </div>
+        <a class="verpedidoambos" target="_blank" href="/documentos/pdfPT_OT?id=' .$pedido->id .'">Ver Ambos</a>
+        </div>
         </td>
     </tr>';
     endforeach; 

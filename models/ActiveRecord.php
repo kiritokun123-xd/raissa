@@ -33,6 +33,21 @@ class ActiveRecord{
             
         }
     }
+    public function guardar2($redireccion){
+        
+        //debuguear($this);
+        if(!is_null($this->id)){
+            //Actualizar
+            //debuguear("actualizando...");
+            $this->actualizar2($redireccion);
+             
+        }else{
+            //Creando un nuevo registo
+            //debuguear("Creando...."); 
+            $this->crear2(); 
+            
+        }
+    }
     public function actualizar($redireccion){
         
         //SANITIZAR LOS DATOS
@@ -54,6 +69,24 @@ class ActiveRecord{
             //REDIRECIONAR AL USUARIO
             header('Location: '. $redireccion .'?resultado=2');
         }
+    }
+    public function actualizar2($redireccion){
+        
+        //SANITIZAR LOS DATOS
+        $atributos = $this->sanitizarAtributos();
+
+        $valores = [];
+
+        foreach($atributos as $key=>$value){
+            $valores[] = "{$key}='{$value}'";
+        }
+        $query = "UPDATE " . static::$tabla . " SET ";
+        $query .= join(', ', $valores);
+        $query .= " WHERE id = " . self::$db->escape_string($this->id);
+        $query .= " LIMIT 1 ";
+        //debuguear($query);
+        $resultado = self::$db->query($query);
+
     }
     public function actualizarSerie($estadoS, $nums){
         
@@ -89,6 +122,57 @@ class ActiveRecord{
 
         $resultado = self::$db->query($query);
     }
+    public function actualizarCantidad($cantidad, $idkey){
+        
+        //SANITIZAR LOS DATOS
+        $atributos = $this->sanitizarAtributos();
+
+        $valores = [];
+
+        foreach($atributos as $key=>$value){
+            $valores[] = "{$key}='{$value}'";
+        }
+        $query = "UPDATE " . static::$tabla . " SET ";
+        $query .= "cantidad = " . $cantidad;
+        $query .= " WHERE id = '" . $idkey;
+        $query .= "' LIMIT 1 ";
+        //debuguear($query);
+        $resultado = self::$db->query($query);
+    }
+    public function actualizarOT_PT($idnew, $idOT){
+        //SANITIZAR LOS DATOS
+        $atributos = $this->sanitizarAtributos();
+
+        $valores = [];
+
+        foreach($atributos as $key=>$value){
+            $valores[] = "{$key}='{$value}'";
+        }
+        $query = "UPDATE pedidos SET ";
+        $query .= "ped_tapiz = " . $idnew;
+        $query .= " WHERE id = " . $idOT;
+        $query .= " LIMIT 1 ";
+        //debuguear($query);
+        $resultado = self::$db->query($query);
+
+    }
+    public function actualizarVenta($estadoV, $id){
+        
+        //SANITIZAR LOS DATOS
+        $atributos = $this->sanitizarAtributos();
+
+        $valores = [];
+
+        foreach($atributos as $key=>$value){
+            $valores[] = "{$key}='{$value}'";
+        }
+        $query = "UPDATE " . static::$tabla . " SET ";
+        $query .= "estado = '" . $estadoV;
+        $query .= "' WHERE id = " . $id;
+        $query .= " LIMIT 1 ";
+
+        $resultado = self::$db->query($query);
+    }
 
     public function crear($redireccion){
         
@@ -103,11 +187,26 @@ class ActiveRecord{
         $query .= "')";
         
         $resultado  = self::$db->query($query);  
-        //
+        //debuguear($resultado);
         if($resultado){
             //REDIRECIONAR AL USUARIO
             header('Location: '. $redireccion .'?resultado=1');
         }
+    }
+    public function crear2(){
+        
+        //SANITIZAR LOS DATOS
+        $atributos = $this->sanitizarAtributos();
+        
+        //INSERTAR EN LA BASE DE DATOS
+        $query = "INSERT INTO " . static::$tabla . " (";
+        $query .= join(', ', array_keys($atributos));
+        $query .= " ) VALUES ('";
+        $query .= join("', '",array_values($atributos));
+        $query .= "')";
+        //debuguear($query);
+        $resultado  = self::$db->query($query);  
+
     }
 
     //Eliminar un registro
@@ -223,8 +322,8 @@ class ActiveRecord{
     }
     public static function allarticulo($offset,$cantidad){
         //ESCRIBIR EL QUERY
-        $query = "SELECT * FROM " . static::$tabla . " order by nombre asc" . " LIMIT " . $offset . " , " . $cantidad ;
-        
+        $query = "SELECT * FROM " . static::$tabla . " LIMIT " . $offset . " , " . $cantidad ;
+        //debuguear($query);
         $resultado = self::constularSQL($query);
 
         return $resultado;
@@ -232,6 +331,22 @@ class ActiveRecord{
     public static function allFechaPedido($offset,$cantidad){
         //ESCRIBIR EL QUERY
         $query = "SELECT * FROM " . static::$tabla . " ORDER BY fecha_ini DESC, id DESC " . " LIMIT " . $offset . " , " . $cantidad;
+        //debuguear($query);
+        $resultado = self::constularSQL($query);
+
+        return $resultado;
+    }
+    public static function allFechaCompra($offset,$cantidad){
+        //ESCRIBIR EL QUERY
+        $query = "SELECT * FROM " . static::$tabla . " ORDER BY fecha DESC, id DESC " . " LIMIT " . $offset . " , " . $cantidad;
+        //debuguear($query);
+        $resultado = self::constularSQL($query);
+
+        return $resultado;
+    }
+    public static function allFechaPedidoVenta($offset,$cantidad){
+        //ESCRIBIR EL QUERY
+        $query = "SELECT * FROM " . static::$tabla . " WHERE estado LIKE '%Enviado%'" ." ORDER BY fecha_ini DESC, id DESC " . " LIMIT " . $offset . " , " . $cantidad;
         //debuguear($query);
         $resultado = self::constularSQL($query);
 
@@ -258,13 +373,38 @@ class ActiveRecord{
         $query = "SELECT * FROM " . static::$tabla . " LIMIT " . $offset . " , " . $cantidad . " ORDER BY fecha";
         
         $resultado = self::constularSQL($query);
-
         return $resultado;
     }
     public static function totalPagina(){
         //ESCRIBIR EL QUERY
         $query = "SELECT * FROM " . static::$tabla;
         
+        $resultado = self::constularSQL($query);
+
+        $totalPagina = count($resultado);
+
+        return $totalPagina;
+    }
+    public static function ultimoId(){
+        //ESCRIBIR EL QUERY
+        $query = "SELECT MAX(id) FROM pedidots";
+        
+        $resultado = self::$db->query($query)->fetch_assoc()["MAX(id)"];
+
+        return $resultado;
+    }
+    public static function ultimoIdCompra(){
+        //ESCRIBIR EL QUERY
+        $query = "SELECT MAX(id) FROM compras";
+        
+        $resultado = self::$db->query($query)->fetch_assoc()["MAX(id)"];
+
+        return $resultado;
+    }
+    public static function totalPaginaVentas(){
+        //ESCRIBIR EL QUERY
+        $query = "SELECT * FROM " . static::$tabla . " WHERE estado LIKE '%Enviado%'";
+        //debuguear($query);
         $resultado = self::constularSQL($query);
 
         $totalPagina = count($resultado);
@@ -300,10 +440,36 @@ class ActiveRecord{
         $resultado = self::constularSQL($query);
         return $resultado;
     }
+    //=======================CREAR DETALLES DE COMPRAS==============
+    public static function crearDetalleCompraAjax($objetos){
+        //ESCRIBIR EL QUERY
+        $query = "INSERT INTO " . static::$tabla;
+        $query .= " (id_compras, id_articulo, cantidad) VALUES";
+        foreach ($objetos as &$obj ){
+            $query .= "(".$obj['id_compras'].",".$obj['id_articulo'].", ".$obj['cantidad'].")," ;  
+        }
+        $query = trim($query, ',');
+        $resultado = self::$db->query($query);
+        return $resultado;
+    }
+    public static function someAjaxArticulo($descripcion){
+        //ESCRIBIR EL QUERY
+        $query = "SELECT * FROM " . static::$tabla . " WHERE descripcion = '" . $descripcion. "'";
+        $resultado = self::constularSQL($query);
+        return $resultado;
+    }
     // Obtiene determinado número de registros
     public static function get($cantidad){
         //ESCRIBIR EL QUERY
         $query = "SELECT * FROM " . static::$tabla . " LIMIT " . $cantidad;
+        
+        $resultado = self::constularSQL($query);
+
+        return $resultado;
+    }
+    public static function getDetalleCompras($id){
+        //ESCRIBIR EL QUERY
+        $query = "SELECT b.id as 'id', b.descripcion, b.fecha , c.codigo, c.descripcion as 'articulo', c.um, a.cantidad FROM detalle a INNER JOIN compras b ON a.id_compras = b.id INNER JOIN articulosn c ON a.id_articulo = c.id WHERE b.id = "  . $id;
         
         $resultado = self::constularSQL($query);
 
@@ -331,6 +497,13 @@ class ActiveRecord{
     public static function find($id){
         $query = "SELECT * FROM " . static::$tabla . " WHERE id = ${id}";
 
+        $resultado = self::constularSQL($query);
+
+        return array_shift($resultado);
+    }
+    public static function find2($newtabla, $campo,$id){
+        $query = "SELECT * FROM " .$newtabla . " WHERE ".$campo." = ${id}";
+        //debuguear($query);    
         $resultado = self::constularSQL($query);
 
         return array_shift($resultado);

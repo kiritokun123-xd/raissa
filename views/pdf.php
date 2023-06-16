@@ -143,19 +143,20 @@ $pdf->AliasNbPages();
 $pdf->Cell(5);
 // Título
 $pdf->Cell(30,30,'IMAGEN',1,0,'C');
-$pdf->SetFont('Arial','B',8);
-$pdf->Cell(48,30,'PROFESIONALES COSECA SAC',1,0,'C');
-$pdf->SetFont('Arial','B',12);
-$pdf->Cell(55,30,'ORDEN DE TRIMOTO',1,0,'C');
-$pdf->Cell(50,30,utf8_decode('FECHA: ' . date_format(date_create($pedido->fecha_ini),'d-m-Y')),1,0,'L');
+$pdf->SetFont('Arial','B',14);
+$pdf->Cell(83,30,utf8_decode('ORDEN DE TRIMOTO: Nº' . $pedido->id),1,0,'C'); 
+$pdf->SetFont('Arial','',12);       
+$pdf->Cell(70,15,utf8_decode('FECHA INICIO: ' . date_format(date_create($pedido->fecha_ini),'d-m-Y')),1,0,'C');
 // Salto de línea
+$pdf->Ln(15);
+$pdf->Cell(118);
+$pdf->Cell(70,15,utf8_decode('FECHA ENTREGA: ' . date_format(date_create($pedido->fecha_ent),'d-m-Y')),1,0,'C');
+$pdf->Ln(15);
+// PED TAPIZ
+$pdf->Cell(118);
+$pdf->Cell(70,15,utf8_decode('Pedido Tapiz : Nº' . $pedido->ped_tapiz),1,0,'C'); 
+$pdf->Ln(20);
 
-
-$pdf->Ln(35);
-$pdf->Cell(5);
-$pdf->Cell(78,20,utf8_decode('FECHA DE ENTREGA: ' . date_format(date_create($pedido->fecha_ent),'d-m-Y')),1,0,'L');
-$pdf->Cell(40,20,utf8_decode('Nº' . $pedido->id),1,1,'C');
-$pdf->Ln(2);
 $pdf->Image('../public_html/imagenes/logopedido.png',15,10,30,30,'','/');
 $pdf->SetLeftMargin(15);
 $pdf->SetFontSize(14);
@@ -167,6 +168,7 @@ $pdf->Cell(90,8,utf8_decode('Motor: ' . $pedido->motor),0,0,'L');
 $pdf->Cell(90,8,utf8_decode('Número: ' . $pedido->nummotor),0,1,'L');
 $pdf->Cell(90,8,utf8_decode('Serie: ' . $pedido->serie),0,1,'L');
 $pdf->Ln(5);
+$pdf->SetFont('Arial','B',14);
 $pdf->Cell(40,10,utf8_decode('VEHICULO: '),1,0,'R');
 $pdf->SetFont('Arial','',14);
 $pdf->Cell(50,10,utf8_decode($pedido->moto),1,0,'L');

@@ -1,10 +1,10 @@
 <?php
 
 function conectarDB() : mysqli{
-    $db = new mysqli("localhost", "root", "root","raissa");
+    $db = new mysqli("localhost", "root", "root","raissa2");
     $db -> set_charset("utf8");
     if(!$db){
-        echo "Error ndo se pudo conectar";
+        echo "Error no se pudo conectar";
         exit;
     }
 

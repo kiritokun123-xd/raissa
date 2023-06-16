@@ -12,7 +12,7 @@
         <div class="contenido-newarticulo">
             <div class="newarticulo-head">
                 <h4>Actualizar Pedido</h4>
-                <a href="/logistica/pedido" class="btn-cerrar" id="btn-cerrar">
+                <a href="/logistica/con-aprobacion" class="btn-cerrar" id="btn-cerrar">
                     <i class='bx bx-arrow-back'></i>
                 </a>
             </div>
@@ -23,7 +23,7 @@
 
                     <div class="btns-form">
                         <input type="submit" value="Actualizar" class="btn-guardar" id="btn-guardar">
-                        <a href="/logistica/pedido" class="btn-cancelar" id="btn-cancelar">Atras</a>
+                        <a href="/logistica/con-aprobacion" class="btn-cancelar" id="btn-cancelar">Atras</a>
                     </div>
 
                     

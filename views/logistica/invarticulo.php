@@ -37,10 +37,12 @@
                 <?php foreach($articulos as $articulo) : ?>
                 <tr>
                     <td><?php echo $articulo->id; ?></td>
-                    <td><?php echo $articulo->nombre; ?></td>
+                    <td><?php echo $articulo->codigo; ?></td>
                     <td class="td-descripcion"><?php echo $articulo->descripcion; ?></td>
-                    <td>S/ <?php echo $articulo->costo; ?></td>
-                    <td>S/ <?php echo $articulo->venta; ?></td>
+                    <td>S/ <?php echo $articulo->area; ?></td>
+                    <td>S/ <?php echo $articulo->tipo; ?></td>
+                    <td>S/ <?php echo $articulo->um; ?></td>
+                    <td>S/ <?php echo $articulo->cantidad; ?></td>
                     <td class="td-stock" >
                         <div class="td-info-stock"  data-paso="<?php echo $articulo->id; ?>">
                             <a href="" >Ver Stock</a>

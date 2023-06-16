@@ -21,7 +21,17 @@
                 </div>
             </div>
         </a>
-        <a href="/logistica/pedido">
+        <a href="/venta">
+            <div class="acceso-articulo">
+                <div class="acceso-titulo">
+                    <h3 class="text-center">Ventas</h3>
+                </div>
+                <div class="acceso-caja">
+                    <i class='bx bx-cart icono-caja'></i>
+                </div>
+            </div>
+        </a>
+        <a href="/logistica/sin-aprobacion">
             <div class="acceso-articulo">
                 <div class="acceso-titulo">
                     <h3 class="text-center rojo">Pedidos Trimotos</h3>

@@ -39,6 +39,7 @@
                         <div class="div-acciones">
                             <a href="/logistica/actualizar-pedidoTS?id=<?php echo $pedido->id; ?>" class="accion-actualizar"><i class='bx bxs-pencil'></i></a>
                             <a class="verpedido" target="_blank" href="/documentos/pdfTS?id=<?php echo $pedido->id;?>">Ver</a>
+                            <a class="verpedidoambos" target="_blank" href="/documentos/pdfOT_PT?id=<?php echo $pedido->id;?>">Ver Ambos</a>
                         </div>
                     </td>
                     
@@ -76,6 +77,20 @@
             ?>
             <script>
                 mensajeAlerta('!Éxito!','Pedido Actualizado Correctamente','success','Ok')
+            </script>
+            <?php
+        }
+        if($resultado == 3){
+            ?>
+            <script>
+                mensajeAlerta('!Error!','Número de Orden de Trimoto no existe','error','Ok')
+            </script>
+            <?php
+        }
+        if($resultado == 4){
+            ?>
+            <script>
+                mensajeAlerta('!Error!','No existe Orden Trimoto','error','Ok')
             </script>
             <?php
         }

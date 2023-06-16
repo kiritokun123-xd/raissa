@@ -7,7 +7,7 @@
 <label for="new-vendedor">Vendedor:</label>
 <input type="text" id="new-vendedor" name="pedido[vendedor]" placeholder="Ingrese nombre del vendedor" value="<?php echo s($pedido->vendedor); ?>">
 
-<div class="asignar serie" id="contenedor-asigS">
+<div  class="asignar serie" id="contenedor-asigS">
     <label for="new-serie">Serie:</label>
     <input type="text" id="new-serie" name="pedido[serie]" readonly value="<?php echo s($pedido->serie); ?>">
     <a id="btn-asignar-s" class="btn btn-serie">Asignar</a>
@@ -17,7 +17,7 @@
     <label for="new-motor">Motor:</label>
     <input type="text" id="new-motor" name="pedido[motor]" placeholder="Ingrese  descripcion motor" value="<?php echo s($pedido->motor); ?>">
     <input type="text" id="new-nummotor" name="pedido[nummotor]" readonly value="<?php echo s($pedido->nummotor); ?>">
-    <a id="btn-asignar-m" class="btn btn-serie">Asignar</a>
+    <a  id="btn-asignar-m" class="btn btn-serie">Asignar</a>
 </div>
 
 <label for="new-fecha-ent">Fecha de Entrega:</label>

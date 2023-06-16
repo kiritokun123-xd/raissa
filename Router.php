@@ -124,6 +124,20 @@ class Router{
         }
         include __DIR__ . "/views/pdf.php";
     }
+    public function renderPDFVenta($datos = []){
+        foreach($datos as $key=>$value){
+            //Crea variables desde el key : mensaje ----> $mensaje
+            $$key = $value;     
+        }
+        include __DIR__ . "/views/pdfventa.php";
+    }
+    public function renderPDFCompra($datos = []){
+        foreach($datos as $key=>$value){
+            //Crea variables desde el key : mensaje ----> $mensaje
+            $$key = $value;     
+        }
+        include __DIR__ . "/views/pdfcompra.php";
+    }
     public function renderPDF2($datos = []){
         foreach($datos as $key=>$value){
             //Crea variables desde el key : mensaje ----> $mensaje
@@ -144,6 +158,20 @@ class Router{
             $$key = $value;     
         }
         include __DIR__ . "/views/pdfTS.php";
+    }
+    public function renderPDFOT_PT($datos = []){
+        foreach($datos as $key=>$value){
+            //Crea variables desde el key : mensaje ----> $mensaje
+            $$key = $value;     
+        }
+        include __DIR__ . "/views/pdfOT_PT.php";
+    }
+    public function renderPDFPT_OT($datos = []){
+        foreach($datos as $key=>$value){
+            //Crea variables desde el key : mensaje ----> $mensaje
+            $$key = $value;     
+        }
+        include __DIR__ . "/views/pdfPT_OT.php";
     }
 
 }
