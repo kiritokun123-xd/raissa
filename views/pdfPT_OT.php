@@ -262,9 +262,9 @@ $pdf->Cell(170,100,' IMAGEN MOTO PERFIL',1,0,'C');
 //IMAGENES
 $pdf->Image('../public_html/imagenes/loguito.jpg',11,11,14,14,'','/');
 //IMAGEN COBERTOR
-$pdf->Image('../public_html/imagenes/' . $pedidoT->ima_cobertor ,10,52,90,50,'');
+$pdf->Image('../public_html/imagenes/' . $pedidoT->ima_cobertor ,15,52,90,50,'');
 //IMAGEN MOTO
-$pdf->Image('../public_html/imagenes/' . $pedidoT->ima_trimoto,20,103,170,100,'');
+$pdf->Image('../public_html/imagenes/' . $pedidoT->ima_trimoto,25,103,170,100,'');
 
 //espacio
 $pdf->Ln(100);

@@ -27,13 +27,14 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>codigo</th>
-                    <th>descripcion</th>
-                    <th>area</th>
-                    <th>tipo</th>
-                    <th>um</th>
-                    <th>cantidad</th>
-                    <th>Acciones</th>
+                    <th>Código</th>
+                    <th>Descripcion</th>
+                    <th>Área</th>
+                    <th>Tipo</th>
+                    <th>UM</th>
+                    <th>Costo</th>
+                    <th>Stock</th>
+                    <th>Modificar Stock</th>
                 </tr>
             </thead>
             <tbody id="invarticulo-body">
@@ -44,6 +45,7 @@
                     <td><?php echo $articulo->area; ?></td>
                     <td><?php echo $articulo->tipo; ?></td>
                     <td><?php echo $articulo->um; ?></td>
+                    <td>S/<?php echo $articulo->costo; ?></td>
                     <td><?php echo $articulo->cantidad; ?></td>              
                     <td class="td-acciones"> 
                         <div class="div-acciones articulos">

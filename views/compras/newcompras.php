@@ -35,6 +35,10 @@
                     <input id="um-articulo" type="text" disabled>
                 </div>
                 <div class="entradas">
+                    <h4>Stock</h4>
+                    <input id="stock-articulo" type="text" disabled>
+                </div>
+                <div class="entradas">
                     <h4>Cantidad</h4>
                     <input id="cantidad-articulo" type="number" step="0.01">
                 </div>
@@ -93,6 +97,7 @@
 					$.get("/ajax/nombrearticuloAjax", params, function (response) {
 						json = JSON.parse(response);
                         $("#um-articulo").val(json[0].um)
+                        $("#stock-articulo").val(json[0].cantidad)
 					}); 
                    
 				}

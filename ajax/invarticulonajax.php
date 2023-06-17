@@ -8,6 +8,7 @@ foreach($articulos as $articulo) :
         <td>'. $articulo->area .'</td>
         <td>'. $articulo->tipo .'</td>
         <td>'. $articulo->um .'</td>
+        <td>S/'. $articulo->costo .'</td>
         <td>'. $articulo->cantidad .'</td>
         <td class="td-acciones"> 
             <div class="div-acciones articulos">
